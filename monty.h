@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -52,13 +53,17 @@ typedef struct arg_s
 {
 	FILE *stream;
 	char *line;
+	unsigned int line_num;
+	int value;
 } arg_t;
 
 extern arg_t *arguments;
 
+/* handle command input */
 int main(int argc, char **argv);
 void validate_args(int argc);
+void initialize_args(void);
 void tokenize_line(char *filename);
-void initialize_args();
+int get_opcode(stack_t **stack, char *arg, char *item, int line_number);
 
 #endif

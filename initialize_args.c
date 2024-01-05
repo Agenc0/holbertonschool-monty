@@ -6,7 +6,7 @@
 
 arg_t *arguments;
 
-void initialize_args()
+void initialize_args(void)
 {
 	arguments = malloc(sizeof(arg_t));
 	if (arguments == NULL)
@@ -16,4 +16,6 @@ void initialize_args()
 		}
 	arguments->stream = NULL;
 	arguments->line = NULL;
+	arguments->line_num = 0;
+	arguments->value = 0;
 }

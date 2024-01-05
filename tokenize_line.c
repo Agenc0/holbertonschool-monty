@@ -4,11 +4,14 @@
  * tokenize_lines - tokenizes input into separate words
  */
 
+arg_t *arguments;
+
 void tokenize_line(char *filename)
 {
-	char *delims = " \n\t\r", *tokenizer;
+	char *delims = " \n\t\r";
+	char *tokenizer = NULL, *item = NULL;
 	size_t length = 0;
-	char *buffer, *item = NULL;
+	stack_t *stack = NULL;
 
 	arguments->stream = fopen(filename, "r");
 
@@ -21,8 +24,21 @@ void tokenize_line(char *filename)
 	while (getline(&arguments->line, &length, arguments->stream) != -1)
 	{
 		tokenizer = strtok(arguments->line, delims); /* first command */
-		printf("%s\n", tokenizer);
+
+		if (tokenizer == NULL)
+		{
+			free(arguments);
+			continue;
+		}
+		else if (*tokenizer == '#')
+			continue;
+
 		item = strtok(NULL, delims); /* integer after the command */
+
+		arguments->line_num++;
+		/*result = get_opcode(&stack, tokenizer, item, arguments->line_num);*/
+		printf("%s\n", tokenizer);
+		printf("%s\n", item);
 
 		/* e.g.
 		 * tokenizer = push
