@@ -6,34 +6,26 @@
 
 void tokenize_line(char *filename)
 {
-	char *delims = " \n$", *tokenizer;
-	unsigned int length;
-	char *buffer;
-	FILE *file;
+	char *delims = " \n\t\r", *tokenizer;
+	size_t length = 0;
+	char *buffer, *item = NULL;
 
-	file = fopen(filename, "r");
+	arguments->stream = fopen(filename, "r");
 
-	if (!file)
+	if (!arguments->stream)
 	{
 		dprintf(2, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
 
-	fseek(file, 0, SEEK_END); /* seek to EOF */
-	length = ftell(file);
-	fseek(file, 0, SEEK_SET); /* seek to beginning of file */
-	buffer = malloc(sizeof(char) * length);
-
-	while (fgets(buffer, length, file))
+	while (getline(&arguments->line, &length, arguments->stream) != -1)
 	{
-		tokenizer = strtok(buffer, delims);
-		while (tokenizer != NULL)
-		{
-			printf("%s\n", tokenizer);
-			tokenizer = strtok(NULL, delims);
-		}
-	}
+		tokenizer = strtok(arguments->line, delims); /* first command */
+		printf("%s\n", tokenizer);
+		item = strtok(NULL, delims); /* integer after the command */
 
-	printf("\n");
-	fclose(file);
+		/* e.g.
+		 * tokenizer = push
+		 * item = 5 */
+	}
 }

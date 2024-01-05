@@ -59,5 +59,6 @@ extern arg_t *arguments;
 int main(int argc, char **argv);
 void validate_args(int argc);
 void tokenize_line(char *filename);
+void initialize_args();
 
 #endif
