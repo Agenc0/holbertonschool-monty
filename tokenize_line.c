@@ -9,9 +9,8 @@ arg_t *arguments;
 void tokenize_line(char *filename)
 {
 	char *delims = " \n\t\r";
-	char *tokenizer = NULL, *item = NULL;
+	char *argtoken = NULL, *item = NULL;
 	size_t length = 0;
-	stack_t *stack = NULL;
 
 	arguments->stream = fopen(filename, "r");
 
@@ -23,25 +22,33 @@ void tokenize_line(char *filename)
 
 	while (getline(&arguments->line, &length, arguments->stream) != -1)
 	{
-		tokenizer = strtok(arguments->line, delims); /* first command */
+		argtoken = strtok(arguments->line, delims); /* first command */
 
-		if (tokenizer == NULL)
+		if (argtoken == NULL)
 		{
-			free(arguments);
+			free(argtoken);
 			continue;
 		}
-		else if (*tokenizer == '#')
+		else if (*argtoken == '#')
 			continue;
 
+		printf("%s\n", argtoken);
+
 		item = strtok(NULL, delims); /* integer after the command */
+		if (item == NULL)
+		{
+			free(item);
+			continue;
+		}
 
 		arguments->line_num++;
-		/*result = get_opcode(&stack, tokenizer, item, arguments->line_num);*/
-		printf("%s\n", tokenizer);
+		/*result = get_opcode(&stack, argtoken, item, arguments->line_num);*/
 		printf("%s\n", item);
 
 		/* e.g.
-		 * tokenizer = push
+		 * argtoken = push
 		 * item = 5 */
 	}
+	fclose(arguments->stream);
+	free(arguments->line);
 }
