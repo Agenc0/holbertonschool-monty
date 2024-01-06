@@ -22,9 +22,9 @@ int get_opcode(stack_t **stack, char *arg, char *item, int line_number)
 		{"pall", pall},
 		{"pint", pint},
 		{"pop", pop},
-		/*{"swap", &swap},
-		{"add", &add},
-		{"nop", &nop},*/
+		{"swap", swap},
+		{"add", add},
+		{"nop", nop},
 		{NULL, NULL}
 	};
 
@@ -32,6 +32,7 @@ int get_opcode(stack_t **stack, char *arg, char *item, int line_number)
 	{
 		if (strcmp(arg, op[i].opcode) == 0)
 		{
+			printf("%s\n", arg);
 			if (strcmp(arg, "push") == 0) /* check if arg is push to use item */
 			{
 				if (isdigit(*item) != 0)
