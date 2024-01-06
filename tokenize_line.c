@@ -11,6 +11,8 @@ void tokenize_line(char *filename)
 	char *delims = " \n\t\r";
 	char *argtoken = NULL, *item = NULL;
 	size_t length = 0;
+	int result = 0;
+	stack_t *stack = NULL;
 
 	arguments->stream = fopen(filename, "r");
 
@@ -22,6 +24,7 @@ void tokenize_line(char *filename)
 
 	while (getline(&arguments->line, &length, arguments->stream) != -1)
 	{
+		arguments->line_num++;
 		argtoken = strtok(arguments->line, delims); /* first command */
 
 		if (argtoken == NULL)
@@ -32,7 +35,6 @@ void tokenize_line(char *filename)
 		else if (*argtoken == '#')
 			continue;
 
-		printf("%s\n", argtoken);
 
 		item = strtok(NULL, delims); /* integer after the command */
 		if (item == NULL)
@@ -41,10 +43,12 @@ void tokenize_line(char *filename)
 			continue;
 		}
 
-		arguments->line_num++;
-		/*result = get_opcode(&stack, argtoken, item, arguments->line_num);*/
-		printf("%s\n", item);
+		result = get_opcode(&stack, argtoken, item, arguments->line_num);
 
+		if (result == 1)
+			push_error(stack);
+		else if (result == 2)
+			instruction_error(stack, argtoken);
 		/* e.g.
 		 * argtoken = push
 		 * item = 5 */

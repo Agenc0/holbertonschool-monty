@@ -15,33 +15,29 @@ arg_t *arguments;
 
 int get_opcode(stack_t **stack, char *arg, char *item, int line_number)
 {
-	int i = 0, j;
-	int *buffer;
+	int i = 0;
 
 	instruction_t op[] = {
-		{"push", &push},
-		{"pall", &pall},
-		{"pint", &pint},
-		{"pop", &pop},
-		{"swap", &swap},
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		/*{"swap", &swap},
 		{"add", &add},
-		{"nop", &nop}
+		{"nop", &nop},*/
+		{NULL, NULL}
 	};
 
-	buffer = malloc(sizeof(item) * sizeof(int));
 	while (op[i].opcode)
 	{
-		if (strcmp(arg, op[i].opcode))
+		if (strcmp(arg, op[i].opcode) == 0)
 		{
-			if (strcmp(arg, "push")) /* check if arg is push to use item */
+			if (strcmp(arg, "push") == 0) /* check if arg is push to use item */
 			{
-				for (j = 0; item[j] != '\0'; j++)
-				{
-					if (isdigit(item[j]) != 0)
-						buffer[j] = atoi(item);
-					else
-						return (1);
-				}
+				if (isdigit(*item) != 0)
+					arguments->value = atoi(item);
+				else
+					return (1);
 			}
 			op[i].f(stack, line_number);
 			break;
