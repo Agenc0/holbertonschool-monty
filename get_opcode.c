@@ -13,9 +13,9 @@
 
 arg_t *arguments;
 
-int get_opcode(stack_t **stack, char *arg, char *item, int line_number)
+int get_opcode(stack_t **stack, char *arg, int line_number)
 {
-	int i = 0;
+	int i;
 
 	instruction_t op[] = {
 		{"push", push},
@@ -28,22 +28,14 @@ int get_opcode(stack_t **stack, char *arg, char *item, int line_number)
 		{NULL, NULL}
 	};
 
-	while (op[i].opcode)
+	for (i = 0; op[i].opcode; i++)
 	{
 		if (strcmp(arg, op[i].opcode) == 0)
 		{
 			printf("%s\n", arg);
-			if (strcmp(arg, "push") == 0) /* check if arg is push to use item */
-			{
-				if (isdigit(*item) != 0)
-					arguments->value = atoi(item);
-				else
-					return (1);
-			}
 			op[i].f(stack, line_number);
 			break;
 		}
-		i++;
 	}
 	if (!op[i].opcode)
 		return (2);

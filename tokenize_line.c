@@ -6,10 +6,22 @@
 
 arg_t *arguments;
 
+void free_tokens(void)
+{
+	size_t i = 0;
+
+	if (op_toks == NULL)
+		return;
+
+	for (i = 0; op_toks[i]; i++)
+		free(op_toks[i]);
+
+	free(op_toks);
+}
+
 void tokenize_line(char *filename)
 {
-	char *delims = " \n\t\r";
-	char *argtoken = NULL, *item = NULL;
+	char *delims = " \n";
 	size_t length = 0;
 	int result = 0;
 	stack_t *stack = NULL;
@@ -25,30 +37,28 @@ void tokenize_line(char *filename)
 	while (getline(&arguments->line, &length, arguments->stream) != -1)
 	{
 		arguments->line_num++;
-		argtoken = strtok(arguments->line, delims); /* first command */
+		op_toks = strtow(arguments->line, delims); /* first command */
 
-		if (argtoken == NULL)
-		{
-			free(argtoken);
+		if (op_toks == NULL)
 			continue;
-		}
-		else if (*argtoken == '#')
+
+		else if (op_toks[0][0] == '#')
 			continue;
 
 
-		item = strtok(NULL, delims); /* integer after the command */
-		if (item == NULL)
-		{
-			free(item);
-			continue;
-		}
+		/*item = strtok(NULL, delims);
+		*if (item == NULL)
+		*{
+		*	free(item);
+		*	continue;
+		}*/
 
-		result = get_opcode(&stack, argtoken, item, arguments->line_num);
+		result = get_opcode(&stack, op_toks[0], arguments->line_num);
 
 		if (result == 1)
 			push_error(stack);
 		else if (result == 2)
-			instruction_error(stack, argtoken);
+			instruction_error(stack, op_toks[0]);
 		/* e.g.
 		 * argtoken = push
 		 * item = 5 */

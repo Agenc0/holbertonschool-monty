@@ -54,17 +54,18 @@ typedef struct arg_s
 	FILE *stream;
 	char *line;
 	unsigned int line_num;
-	int value;
 } arg_t;
 
 extern arg_t *arguments;
+
+extern char **op_toks;
 
 /* handle command input */
 int main(int argc, char **argv);
 void validate_args(int argc);
 void initialize_args(void);
 void tokenize_line(char *filename);
-int get_opcode(stack_t **stack, char *arg, char *item, int line_number);
+int get_opcode(stack_t **stack, char *arg, int line_number);
 
 /* error handlers */
 void push_error(stack_t *stack);
@@ -81,5 +82,9 @@ void nop(stack_t **stack, unsigned int line_number);
 
 /* free stack */
 void free_stack(stack_t *stack);
+
+/* word_tokenizer */
+char **strtow(char *str, char *delims);
+char *get_int(int n);
 
 #endif

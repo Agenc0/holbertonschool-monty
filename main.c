@@ -1,5 +1,7 @@
 #include "monty.h"
 
+char **op_toks = NULL;
+
 int main(int argc, char **argv)
 {
 	validate_args(argc);

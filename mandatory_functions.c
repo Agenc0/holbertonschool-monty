@@ -35,7 +35,12 @@ void push(stack_t **stack, unsigned int line_number)
 	stack_t *new = NULL;
 	(void) line_number;
 
-	new = new_Node(arguments->value);
+	if (op_toks[1] == NULL && isdigit(op_toks[1]) != 0)
+	{
+		push_error(*stack);
+	}
+
+	new = new_Node(atoi(op_toks[1]));
 
 	new->next = *stack;
 	if (*stack != NULL)

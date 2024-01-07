@@ -17,5 +17,4 @@ void initialize_args(void)
 	arguments->stream = NULL;
 	arguments->line = NULL;
 	arguments->line_num = 0;
-	arguments->value = 0;
 }
