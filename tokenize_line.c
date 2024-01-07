@@ -27,7 +27,7 @@ void free_tokens(void)
 
 void tokenize_line(char *filename)
 {
-	char *delims = " \n";
+	char *delims = "$ \n";
 	size_t length = 0;
 	int result = 0;
 	stack_t *stack = NULL;
