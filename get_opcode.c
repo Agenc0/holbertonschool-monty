@@ -32,7 +32,6 @@ int get_opcode(stack_t **stack, char *arg, int line_number)
 	{
 		if (strcmp(arg, op[i].opcode) == 0)
 		{
-			printf("%s\n", arg);
 			op[i].f(stack, line_number);
 			break;
 		}
