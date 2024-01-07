@@ -1,10 +1,11 @@
 #include "monty.h"
 
-/**
- * tokenize_lines - tokenizes input into separate words
- */
-
+char **op_toks = NULL;
 arg_t *arguments;
+
+/**
+ * free_tokens - frees tokens
+ */
 
 void free_tokens(void)
 {
@@ -18,6 +19,11 @@ void free_tokens(void)
 
 	free(op_toks);
 }
+
+/**
+ * tokenize_line - tokenizes lines from .m file
+ * @filename: filename or filepath of the target file
+ */
 
 void tokenize_line(char *filename)
 {
@@ -45,23 +51,12 @@ void tokenize_line(char *filename)
 		else if (op_toks[0][0] == '#')
 			continue;
 
-
-		/*item = strtok(NULL, delims);
-		*if (item == NULL)
-		*{
-		*	free(item);
-		*	continue;
-		}*/
-
 		result = get_opcode(&stack, op_toks[0], arguments->line_num);
 
 		if (result == 1)
 			push_error(stack);
 		else if (result == 2)
 			instruction_error(stack, op_toks[0]);
-		/* e.g.
-		 * argtoken = push
-		 * item = 5 */
 	}
 	fclose(arguments->stream);
 	free(arguments->line);

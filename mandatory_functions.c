@@ -1,9 +1,9 @@
 #include "monty.h"
 
 /**
- * stack_t - initializes a new nose
+ * new_Node - initializes a new nose
  * @n: value of node
- * 
+ *
  * Return: new node if successful, otherwise error
  */
 
@@ -32,12 +32,23 @@ stack_t *new_Node(int n)
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new = NULL;
+	stack_t *new;
 	(void) line_number;
+	int i;
 
-	if (op_toks[1] == NULL && isdigit(op_toks[1]) != 0)
+	if (op_toks[1] == NULL)
 	{
 		push_error(*stack);
+	}
+
+	for (i = 0; op_toks[1][i]; i++)
+	{
+		if (op_toks[1][i] == '-' && i == 0)
+			continue;
+		if (op_toks[1][i] < '0' || op_toks[1][i] > '9')
+		{
+			push_error(*stack);
+		}
 	}
 
 	new = new_Node(atoi(op_toks[1]));
@@ -110,78 +121,4 @@ void pop(stack_t **stack, unsigned int line_number)
 		current->next->prev = current->prev;
 
 	free(current);
-}
-
-/**
- * swap - swap the top two elements of the stack
- * @stack: stack to swap the top two values
- * @line_number: line location
- */
-void swap(stack_t **stack, unsigned int line_number)
-{
-	stack_t *current = *stack;
-	int temp = 0;
-
-	if (!*stack || !(*stack)->next)
-	{
-		dprintf(STDERR_FILENO, "L%d: can't swap, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-	temp = current->n;
-	current->n = current->next->n;
-	current->next->n = temp;
-}
-
-/**
- * add - add two integers to the stack
- * @stack: stack to add two integers
- * @line_number: line location
- */
-
-void add(stack_t **stack, unsigned int line_number)
-{
-	stack_t *current = NULL;
-	int sum = 0;
-
-	if (!*stack || !(*stack)->next)
-	{
-		dprintf(STDERR_FILENO, "L%d: can't add, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-	current = *stack;
-	sum = current->n + current->next->n;
-	current->next->n = sum;
-	pop(stack, line_number);
-}
-
-/**
- * nop - uhhhhh doesn't do anything
- * @stack: stack
- * @line_number: line location
- */
-
-void nop(stack_t **stack, unsigned int line_number)
-{
-	(void) stack;
-	(void) line_number;
-}
-
-/**
- * free_stack - frees memory of a stack
- * @stack: stack to free memory
- */
-
-void free_stack(stack_t *stack)
-{
-	stack_t *current = NULL;
-
-	current = stack;
-
-	if (current != NULL)
-	{
-		free_stack(current->next);
-		free(current);
-	}
 }

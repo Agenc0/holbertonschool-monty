@@ -20,9 +20,9 @@
  */
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -35,14 +35,15 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
  * struct arg_s - hold variables
  * @stream: File that connects to the stream from file
  * @line: string which will be the line of text read from stream
+ * @line_num: number of line
  *
  * Description: hold variables that will be used in
  * different functions of the project as well as
@@ -86,5 +87,8 @@ void free_stack(stack_t *stack);
 /* word_tokenizer */
 char **strtow(char *str, char *delims);
 char *get_int(int n);
+
+/* check stack_t mode */
+int check_mode(stack_t *stack);
 
 #endif
