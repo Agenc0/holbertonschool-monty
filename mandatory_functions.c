@@ -1,5 +1,7 @@
 #include "monty.h"
 
+int value;
+
 /**
  * new_Node - initializes a new nose
  * @n: value of node
@@ -36,7 +38,7 @@ void push(stack_t **stack, unsigned int line_number)
 	stack_t *new;
 	(void) line_number;
 
-	new = new_Node(arguments->value);
+	new = new_Node(value);
 
 	new->next = *stack;
 	if (*stack != NULL)

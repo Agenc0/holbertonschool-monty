@@ -55,10 +55,10 @@ typedef struct arg_s
 	FILE *stream;
 	char *line;
 	unsigned int line_num;
-	int value;
 } arg_t;
 
 extern arg_t *arguments;
+extern int value;
 
 /* handle command input */
 int main(int argc, char **argv);

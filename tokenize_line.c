@@ -9,7 +9,7 @@ arg_t *arguments;
 
 void tokenize_line(char *filename)
 {
-	char *delims = "$ \n";
+	char *delims = " \n";
 	char *tokenizer, *item;
 	size_t length = 0;
 	int result = 0;
