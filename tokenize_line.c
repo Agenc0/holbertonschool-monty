@@ -9,7 +9,7 @@ arg_t *arguments;
 
 void free_tokens(void)
 {
-	size_t i = 0;
+	size_t i;
 
 	if (op_toks == NULL)
 		return;
@@ -37,6 +37,7 @@ void tokenize_line(char *filename)
 	if (!arguments->stream)
 	{
 		dprintf(2, "Error: Can't open file %s\n", filename);
+		free(arguments);
 		exit(EXIT_FAILURE);
 	}
 
@@ -59,5 +60,8 @@ void tokenize_line(char *filename)
 			instruction_error(stack, op_toks[0]);
 	}
 	fclose(arguments->stream);
+	free_stack(stack);
 	free(arguments->line);
+	free(arguments);
+	free_tokens();
 }

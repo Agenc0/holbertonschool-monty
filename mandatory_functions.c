@@ -10,6 +10,7 @@
 stack_t *new_Node(int n)
 {
 	stack_t *new = NULL;
+	(void) n;
 
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
@@ -78,6 +79,8 @@ void pall(stack_t **stack, unsigned int line_number)
 		dprintf(STDIN_FILENO, "%d\n", tmp->n);
 		tmp = tmp->next;
 	}
+
+	free(tmp);
 }
 
 /**
