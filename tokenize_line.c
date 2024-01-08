@@ -60,7 +60,7 @@ void tokenize_line(char *filename)
 			instruction_error(stack, op_toks[0]);
 	}
 	fclose(arguments->stream);
-	free_stack(stack);
+	clean_stack(stack);
 	free(arguments->line);
 	free(arguments);
 	free_tokens();

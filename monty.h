@@ -83,6 +83,7 @@ void nop(stack_t **stack, unsigned int line_number);
 
 /* free stack */
 void free_stack(stack_t *stack);
+void clean_stack(stack_t *stack);
 
 /* word_tokenizer */
 char **strtow(char *str, char *delims);
