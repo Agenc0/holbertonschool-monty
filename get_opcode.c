@@ -13,7 +13,7 @@
 
 arg_t *arguments;
 
-int get_opcode(stack_t **stack, char *arg, int line_number)
+int get_opcode(stack_t **stack, char *arg, char *item, int line_number)
 {
 	int i;
 
@@ -32,6 +32,13 @@ int get_opcode(stack_t **stack, char *arg, int line_number)
 	{
 		if (strcmp(arg, op[i].opcode) == 0)
 		{
+			if (strcmp(arg, "push") == 0)
+			{
+				if (isdigit(*item) != 0)
+					arguments->value = atoi(item);
+				else
+					return (1);
+			}
 			op[i].f(stack, line_number);
 			break;
 		}

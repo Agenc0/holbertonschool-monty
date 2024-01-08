@@ -35,24 +35,8 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new;
 	(void) line_number;
-	int i;
 
-	if (op_toks[1] == NULL)
-	{
-		push_error(*stack);
-	}
-
-	for (i = 0; op_toks[1][i]; i++)
-	{
-		if (op_toks[1][i] == '-' && i == 0)
-			continue;
-		if (op_toks[1][i] < '0' || op_toks[1][i] > '9')
-		{
-			push_error(*stack);
-		}
-	}
-
-	new = new_Node(atoi(op_toks[1]));
+	new = new_Node(arguments->value);
 
 	new->next = *stack;
 	if (*stack != NULL)
