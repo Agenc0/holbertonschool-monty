@@ -24,10 +24,9 @@ void validate_args(int argc, char **argv)
 
 /**
  * tokenize_line - tokenizes each line from file into separate words
- * @filename: file to get each line and tokenize from
  */
 
-void tokenize_line()
+void tokenize_line(void)
 {
 	size_t length = 0;
 	unsigned int line_num = 1;
@@ -39,7 +38,7 @@ void tokenize_line()
 
 		if (arguments.token)
 		{
-			arguments.f = get_opcode(arguments.token, line_num);
+			arguments.f = get_op(arguments.token, line_num);
 			arguments.token = strtok(NULL, delims);
 			arguments.f(&arguments.top, line_num);
 		}
@@ -47,25 +46,20 @@ void tokenize_line()
 }
 
 /**
- * get_opcode - sets opcode and instruction on the first token
+ * get_op - sets opcode and instruction on the first token
  * @arg: instruction name
  * @line_number: line position in file
  *
  * Return: function address if successful, else exit failure
  */
 
-void (*get_opcode(char *arg, unsigned int line_number))(stack_t **, unsigned int)
+void (*get_op(char *arg, unsigned int line_number))(stack_t **, unsigned int)
 {
 	int i;
 
 	instruction_t op[] = {
 		{"push", push},
 		{"pall", pall},
-		/*{"pint", pint},
-		{"pop", pop},
-		{"swap", swap},
-		{"add", add},
-		{"nop", nop},*/
 		{NULL, NULL}
 	};
 

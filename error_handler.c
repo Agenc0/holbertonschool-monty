@@ -2,7 +2,7 @@
 
 /**
  * push_error - handle push error
- * @stack: pointer to a stack or queue
+ * @line_number: line location in file
  */
 
 void push_error(unsigned int line_number)
@@ -15,8 +15,8 @@ void push_error(unsigned int line_number)
 
 /**
  * instruction_error - handle invalid instruction
- * @stack: poiner to a stack or queue
- * @tokenizer: tokenized work to print to stdout
+ * @tokenizer: tokenized word to printn to stdout
+ * @line_number: line location in file
  */
 
 void instruction_error(char *tokenizer, unsigned int line_number)

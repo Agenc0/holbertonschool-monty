@@ -63,7 +63,7 @@ void validate_args(int ac, char **av);
 void tokenize_line(void);
 void free_stack(void);
 int is_digit(char *number);
-void (*get_opcode(char *str, unsigned int line_number))(stack_t **, unsigned int);
+void (*get_op(char *str, unsigned int line_number))(stack_t **, unsigned int);
 
 /* error functions */
 void push_error(unsigned int line_number);

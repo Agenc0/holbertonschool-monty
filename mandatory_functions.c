@@ -35,6 +35,12 @@ void push(stack_t **stack, unsigned int line_number)
 	*stack = new;
 }
 
+/**
+ * pall - prints all elements in stack, starting from top
+ * @stack: pointer to top of the stack
+ * @line_number: line location in file
+ */
+
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = *stack;
