@@ -110,8 +110,8 @@ void swap(stack_t **stack, unsigned int line_number)
 	if (!stack || !*stack || !(*stack)->next)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-		freeStack();
-		fclose(glob.fd);
+		free_stack();
+		fclose(arguments.fd);
 		exit(EXIT_FAILURE);
 	}
 
@@ -119,8 +119,8 @@ void swap(stack_t **stack, unsigned int line_number)
 	if (!tmp)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		freeStack();
-		fclose(glob.fd);
+		free_stack();
+		fclose(arguments.fd);
 		exit(EXIT_FAILURE);
 	}
 
