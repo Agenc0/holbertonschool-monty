@@ -1,13 +1,13 @@
 #ifndef MONTY_H
 #define MONTY_H
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
-
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -25,7 +25,6 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
-
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -41,36 +40,38 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct argument_s - decleration
- * @buffer: store line temporarily
- * @token: string buffer for strok
- * @fd: file descriptor
- * @f: function pointer for checkop
- * @top: stack
+ * struct arg_s - hold variables
+ * @stream: File that connects to the stream from file
+ * @line: string which will be the line of text read from stream
+ * @line_num: number of line
+ *
+ * Description: hold variables that will be used in
+ * different functions of the project as well as
+ * variables that will require memory allocation and freeing
  */
+
 typedef struct arg_s
 {
-	char *buffer, *token;
-	FILE *fd;
-	void (*f)(stack_t **stack, unsigned int line_number);
-	stack_t *top;
+	FILE *stream;
+	char *line;
+	unsigned int line_num;
 } arg_t;
-extern arg_t arguments;
-arg_t arguments;
 
-/* parsing functions */
-void validate_args(int ac, char **av);
-void tokenize_line(void);
-void free_stack(void);
-int is_digit(char *number);
-void (*get_opcode(char *str, unsigned int line_number))(stack_t **, unsigned int);
+extern arg_t *arguments;
+extern int value;
 
-/* error functions */
-void push_error(unsigned int line_number);
-void instruction_error(char *tokenizer, unsigned int line_number);
+/* handle command input */
+int main(int argc, char **argv);
+void validate_args(int argc);
+void initialize_args(void);
+void tokenize_line(char *filename);
+int get_opcode(stack_t **stack, char *arg, char *item, int line_number);
 
+/* error handlers */
+void push_error(stack_t *stack);
+void instruction_error(stack_t *stack, char *tokenizer);
 
-/* command functions */
+/* commands */
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
@@ -78,5 +79,16 @@ void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+
+/* free stack */
+void free_stack(stack_t *stack);
+void clean_stack(stack_t *stack);
+
+/* word_tokenizer */
+char **strtow(char *str, char *delims);
+char *get_int(int n);
+
+/* check stack_t mode */
+int check_mode(stack_t *stack);
 
 #endif
